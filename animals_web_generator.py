@@ -1,8 +1,24 @@
 import json
+import requests
+
 
 
 ANIMALS_FILE = "animals_data.json"
 HTML_FILE = "animals_template.html"
+KEY = "iZlME8CzS4pIYNUSJfhJzQ==COSShqfeyIFzN9Ey"
+
+
+
+def API(animal, KEY):
+    """"""
+    url = f"https://api.api-ninjas.com/v1/animals?name={animal}"
+    headers = {
+        "X-Api-Key": KEY
+    }
+    res = requests.get(url=url, headers=headers)
+    animal = res.json()
+    return animal
+
 
 
 def load_json(FILE):
@@ -58,7 +74,9 @@ def get_skin_type_user():
 
 
 def main():
-    animals_data = load_json(ANIMALS_FILE)
+    animal = ('Fox')
+    animals_data = API(animal, KEY)
+    animal_string = animals_data
     animal_string = ''
     print_list_of_skin_types(animals_data)
     skin_type = get_skin_type_user()
