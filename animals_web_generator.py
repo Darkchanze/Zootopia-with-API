@@ -64,6 +64,7 @@ def print_list_of_skin_types(animals_data):
             list_of_hairtypes.add(animal["characteristics"]["skin_type"])
     for hairtype in list_of_hairtypes:
         print(hairtype)
+    print("If you dont want to filter for hair types press Enter.")
 
 def get_skin_type_user():
     """Get the skin type from user input. Try to get input as long as it is correct."""
@@ -71,19 +72,32 @@ def get_skin_type_user():
         skin_type = input("Enter a skin type form above: ")
         if skin_type == "Fur" or skin_type == "Scales" or skin_type == "Hair":
             return skin_type
+        elif skin_type == '':
+            return 'All skins'
 
+def create_animal_string(skin_type, animals_data):
+    """Creates the later added HTML code."""
+    animals_string = ''
+    if skin_type == 'All skins':
+        for animal_obj in animals_data:
+            animals_string += get_animal_string(animal_obj)
+    else:
+        for animal_obj in animals_data:
+            if animal_obj["characteristics"]["skin_type"] == skin_type:
+                animals_string += get_animal_string(animal_obj)
+    return animals_string
 
 def main():
     animal = input("Enter a name of an animal: ")
     animals_data = API(animal, KEY)
-    animal_string = ''
     print_list_of_skin_types(animals_data)
     skin_type = get_skin_type_user()
-    for animal_obj in animals_data:
-        if animal_obj["characteristics"]["skin_type"] == skin_type:
-            animal_string += get_animal_string(animal_obj)
+    animals_string = create_animal_string(skin_type, animals_data)
     html = read_html(HTML_FILE)
-    new_html = html.replace("__REPLACE_ANIMALS_INFO__", animal_string)
+    if animals_string:
+        new_html = html.replace("__REPLACE_ANIMALS_INFO__", animals_string)
+    else:
+        new_html = html.replace("__REPLACE_ANIMALS_INFO__",f"<li><h2>The animal '{animal}' doesn't exist.</h2></li>")
     write_html(new_html)
     print("Website was successfully generated to the file animals.html.")
 
