@@ -1,7 +1,6 @@
 import json
 import data_fetcher
 
-
 ANIMALS_FILE = "animals_data.json"
 HTML_FILE = "animals_template.html"
 

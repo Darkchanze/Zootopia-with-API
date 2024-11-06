@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
 
+
+
 def fetch_data(animal):
     """
     Fetches the animals data for the animal 'animal_name'.
