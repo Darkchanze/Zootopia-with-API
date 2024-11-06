@@ -2,10 +2,8 @@ import json
 import data_fetcher
 
 
-
 ANIMALS_FILE = "animals_data.json"
 HTML_FILE = "animals_template.html"
-KEY = "iZlME8CzS4pIYNUSJfhJzQ==COSShqfeyIFzN9Ey"
 
 
 def load_json(FILE):
@@ -38,7 +36,7 @@ def get_animal_string(animal_obj):
         output += f"<li><strong>Location:</strong> {animal_obj["locations"][0]}</li>\n"
     if "type" in animal_obj["characteristics"]:
         output += f"<li><strong>Type:</strong> {animal_obj["characteristics"]["type"]}</li>\n"
-    if "type" in animal_obj["characteristics"]:
+    if "lifespan" in animal_obj["characteristics"]:
         output += f"<li><strong>Life span:</strong> {animal_obj["characteristics"]["lifespan"]}</li>\n"
     output += "</ul></p>\n</li>"
     return output
@@ -57,7 +55,7 @@ def get_skin_type_user():
     """Get the skin type from user input. Try to get input as long as it is correct."""
     while True:
         skin_type = input("Enter a skin type form above: ")
-        if skin_type == "Fur" or skin_type == "Scales" or skin_type == "Hair":
+        if skin_type == "Fur" or skin_type == "Scales" or skin_type == "Hair" or skin_type == "Skin" or skin_type == "Hard Shell":
             return skin_type
         elif skin_type == '':
             return 'All skins'
@@ -76,7 +74,7 @@ def create_animal_string(skin_type, animals_data):
 
 def main():
     animal = input("Enter a name of an animal: ")
-    animals_data = data_fetcher.fetch_data(animal, KEY)
+    animals_data = data_fetcher.fetch_data(animal)
     print_list_of_skin_types(animals_data)
     skin_type = get_skin_type_user()
     animals_string = create_animal_string(skin_type, animals_data)
