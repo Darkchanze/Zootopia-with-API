@@ -74,9 +74,8 @@ def get_skin_type_user():
 
 
 def main():
-    animal = ('Fox')
+    animal = input("Enter a name of an animal: ")
     animals_data = API(animal, KEY)
-    animal_string = animals_data
     animal_string = ''
     print_list_of_skin_types(animals_data)
     skin_type = get_skin_type_user()
@@ -86,6 +85,7 @@ def main():
     html = read_html(HTML_FILE)
     new_html = html.replace("__REPLACE_ANIMALS_INFO__", animal_string)
     write_html(new_html)
+    print("Website was successfully generated to the file animals.html.")
 
 
 if __name__ == "__main__":
