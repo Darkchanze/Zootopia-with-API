@@ -60,8 +60,10 @@ def print_list_of_skin_types(animals_data):
         print(hairtype)
     print("If you dont want to filter for hair types press Enter.")
 
+
 def get_skin_type_user():
-    """Get the skin type from user input. Try to get input as long as it is correct."""
+    """Get the skin type from user input. Try to get input as long as it is correct.
+    Return a skin type or if empyt string return 'All skins' """
     while True:
         skin_type = input("Enter a skin type form above: ")
         if skin_type == "Fur" or skin_type == "Scales" or skin_type == "Hair" or skin_type == "Skin" or skin_type == "Hard Shell":
@@ -69,17 +71,21 @@ def get_skin_type_user():
         elif skin_type == '':
             return 'All skins'
 
+
 def create_animal_string(skin_type, animals_data):
-    """Creates the later added HTML code."""
+    """Get chosen skin_type depending on that decides if all skins are added or just a single one.
+    Returns all animals with the chosen skin types."""
     animals_string = ''
     if skin_type == 'All skins':
         for animal_obj in animals_data:
             animals_string += get_animal_string(animal_obj)
     else:
         for animal_obj in animals_data:
-            if animal_obj["characteristics"]["skin_type"] == skin_type:
-                animals_string += get_animal_string(animal_obj)
+            if "skin_type" in animal_obj["characteristics"]:
+                if animal_obj["characteristics"]["skin_type"] == skin_type:
+                    animals_string += get_animal_string(animal_obj)
     return animals_string
+
 
 def main():
     animal = input("Enter a name of an animal: ")

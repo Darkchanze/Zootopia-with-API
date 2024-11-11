@@ -24,7 +24,7 @@ The project uses the Animals API from API Ninjas to fetch data on a specified an
 
 ### Prerequisites
 - Python 3.x
-- [API Ninjas API Key](https://api-ninjas.com/signup)
+- [API Ninjas API Key](https://api-ninjas.com/signup), [Used API](https://api-ninjas.com/api/animals)
 - [dotenv](https://pypi.org/project/python-dotenv/) package for securely handling the API key
 
 ### Setup
