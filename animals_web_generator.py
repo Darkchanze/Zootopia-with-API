@@ -6,42 +6,52 @@ HTML_FILE = "animals_template.html"
 
 
 def load_json(FILE):
-    """Load a json file."""
+    """Load json ANIMALS_FILE and returns the file as a list of dictionarys."""
     with open(FILE, "r") as handle:
         return json.load(handle)
 
 
 def read_html(FILE):
-    """Read the html file."""
+    """Reads the HTML_FILE and returns it as a sting."""
     with open(FILE, "r") as handle:
         return handle.read()
 
 
 def write_html(new_html):
-    """Write html file with new code."""
+    """Write a new_html file based on HTML_FILE. Contains the changes made to the html in the program."""
     with open("animals.html","w") as handle:
         handle.write(new_html)
 
 
 def get_animal_string(animal_obj):
-    """Generate the new part of the html file and return it. Output contains the new html."""
+    """Animal_obj contains the list of dictionarys from ANIMALS_FILE. Here we create the output which
+    will be displayed later in the new_html. We check if dictionary info for each animal contains certain
+    data like the location, if so we add it to output. The gathered information is thn returned"""
     output = ""
     output += '<li class="cards__item">'
+    characteristics = animal_obj["characteristics"]
     if "name" in animal_obj:
         output += f' <div class="card__title">{animal_obj["name"]}</div>\n<p class="card__text"><ul class="no_dots">\n'
-    if "diet" in animal_obj["characteristics"]:
-        output += f"<li><strong>Diet:</strong> {animal_obj["characteristics"]["diet"]}</li>\n"
+    if "diet" in characteristics:
+        output += create_html_list_sections("Diet", characteristics["diet"])
     if "locations" in animal_obj:
-        output += f"<li><strong>Location:</strong> {animal_obj["locations"][0]}</li>\n"
-    if "type" in animal_obj["characteristics"]:
-        output += f"<li><strong>Type:</strong> {animal_obj["characteristics"]["type"]}</li>\n"
-    if "lifespan" in animal_obj["characteristics"]:
-        output += f"<li><strong>Life span:</strong> {animal_obj["characteristics"]["lifespan"]}</li>\n"
+        output += create_html_list_sections("Location", animal_obj["locations"][0])
+    if "type" in characteristics:
+        output += create_html_list_sections("Type", characteristics["type"])
+    if "lifespan" in characteristics:
+        output += create_html_list_sections("Life span", characteristics["lifespan"])
     output += "</ul></p>\n</li>"
     return output
 
+
+def create_html_list_sections(attributes, data):
+    """Gets the infos for the HTML line and puts it into the HTML string and then returns it."""
+    return f"<li><strong>{attributes}:</strong> {data}</li>\n"
+
+
 def print_list_of_skin_types(animals_data):
-    """Print hair types available for the user_input."""
+    """From the data of the ANIMALS_FILE we print hair types available for the user_input by checking which
+    skin types are available from the searched animals."""
     list_of_hairtypes = set()
     for animal in animals_data:
         if "skin_type" in animal["characteristics"]:
